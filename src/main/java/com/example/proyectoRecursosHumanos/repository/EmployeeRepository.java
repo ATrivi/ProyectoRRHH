@@ -1,5 +1,6 @@
 package com.example.proyectoRecursosHumanos.repository;
 
+import com.example.proyectoRecursosHumanos.model.CicloPago;
 import com.example.proyectoRecursosHumanos.model.Employee;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -14,6 +15,8 @@ public interface EmployeeRepository extends JpaRepository <Employee, Integer> {
     boolean existsByUserId(Integer userId);
 
     Optional<Employee> findByUser_Email (String email);
+
+    List<Employee> findByCicloPago(CicloPago ciclo);
 
     boolean existsByDepartamento_Id(Integer departmentId);
 

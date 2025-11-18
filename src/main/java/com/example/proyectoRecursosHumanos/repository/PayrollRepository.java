@@ -11,6 +11,7 @@ import java.util.Optional;
 @Repository
 public interface PayrollRepository extends JpaRepository<Payroll, Integer> {
 
+    //Con este parametro extraemos el mes y el año del localDate que tenemos en la entidad Payroll
     List<Payroll> findByFechaPagoBetween(LocalDate startDate, LocalDate endDate); // Para sacar reportes mensuales
     Optional<Payroll> findByEmpleadoId(Integer empleadoId);
 

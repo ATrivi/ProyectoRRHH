@@ -10,6 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -46,6 +47,12 @@ public class PayrollController {
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + filename + "\"")
                 .contentType(MediaType.APPLICATION_PDF) // Indicar que el contenido es un PDF
                 .body(pdfContent);
+    }
+
+    @GetMapping ("/gastos-mensuales")
+    public ResponseEntity<BigDecimal> obtenerGastosMensuales(@RequestParam int year, @RequestParam int month) {
+        BigDecimal gastos = payrollService.calcularCostoTotalPersonalMensual(year, month);
+        return ResponseEntity.ok(gastos);
     }
 
 }

@@ -1,5 +1,6 @@
 package com.example.proyectoRecursosHumanos.dto;
 
+import com.example.proyectoRecursosHumanos.model.CicloPago;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -18,6 +19,7 @@ public class EmployeeRequest {
     private Integer departmentId;
     @NotNull
     private Boolean estado;
+    private CicloPago cicloPago;
     @NotNull  @DecimalMin("0.0")
     private BigDecimal salario;
 

@@ -34,7 +34,8 @@ public class Employee {
     @ManyToOne(fetch = FetchType.LAZY, optional = false) //Solo carga el JobPosition si realmente lo usa en el código
     @JoinColumn(name = "job_position_id", nullable = false)
     private JobPosition puesto;
-
+    @Enumerated(EnumType.STRING)
+    private CicloPago cicloPago;
     @ManyToOne(fetch = FetchType.LAZY, optional = false) //Optional false indica que que la relación es obligatoria y no puede guardar un empleado sin departamento
     @JoinColumn(name = "department_id", nullable = false)
     @JsonBackReference

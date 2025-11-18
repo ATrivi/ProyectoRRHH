@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -146,5 +147,37 @@ public class PayrollService {
         }
     }
 
+    public BigDecimal calcularCostoTotalPersonalMensual(int year, int month) {
 
+        // 1. Calcular el RANGO DE FECHAS usando YearMonth
+        YearMonth targetMonth = YearMonth.of(year, month);
+        LocalDate startDate = targetMonth.atDay(1); // Primer día del mes
+        LocalDate endDate = targetMonth.atEndOfMonth(); // Último día del mes
+        BigDecimal costoAcumulado;
+        try {
+
+            //Obtiene las nóminas del mes
+            List<Payroll> nominasDelMes = payrollRepository.findByFechaPagoBetween(startDate, endDate);
+
+            if (nominasDelMes.isEmpty()) {
+                return BigDecimal.ZERO;
+            }
+
+            //Acumular el costo total
+            costoAcumulado = BigDecimal.ZERO;
+
+            for (Payroll nomina : nominasDelMes) {
+                BigDecimal costoBrutoEmpleado = nomina.getSalarioNeto()
+                        .add(nomina.getImpuestos())
+                        .add(nomina.getDeducciones());
+
+                costoAcumulado = costoAcumulado.add(costoBrutoEmpleado);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Error al calcular el costo total del personal: " + e.getMessage(), e);
+        }
+
+        //Se ajusta el número de decimales a dos posiciones y se redondea
+        return costoAcumulado.setScale(2, RoundingMode.HALF_UP);
+    }
 }
