@@ -147,6 +147,7 @@ public class PayrollService {
         }
     }
 
+    @PreAuthorize("hasAnyRole('HR','ADMIN')")
     public BigDecimal calcularCostoTotalPersonalMensual(int year, int month) {
 
         // 1. Calcular el RANGO DE FECHAS usando YearMonth

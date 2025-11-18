@@ -1,8 +1,10 @@
 package com.example.proyectoRecursosHumanos.service;
 
+import com.example.proyectoRecursosHumanos.dto.NotificationResponse;
 import com.example.proyectoRecursosHumanos.model.Employee;
 import com.example.proyectoRecursosHumanos.model.Notification;
 import com.example.proyectoRecursosHumanos.repository.NotificationRepository;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -16,13 +18,18 @@ public class NotificationService {
         this.notificationRepository = notificationRepository;
     }
 
-    public Notification crearNotificacion (Employee employee, String message, String type) {
+    @PreAuthorize("hasAnyRole('ADMIN','HR')")
+    public NotificationResponse crearNotificacion (Employee employee, String message, String type) {
         Notification notification = new Notification();
         notification.setEmployee(employee);
         notification.setMessage(message);
         notification.setType(type);
         notification.setIsRead(false);
         notification.setCreatedAt(LocalDateTime.now());
-        return notificationRepository.save(notification);
+
+        Notification notificationNueva = notificationRepository.save(notification);
+
+
+        return new NotificationResponse(notificationNueva);
     }
 }

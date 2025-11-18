@@ -54,5 +54,4 @@ public class PayrollController {
         BigDecimal gastos = payrollService.calcularCostoTotalPersonalMensual(year, month);
         return ResponseEntity.ok(gastos);
     }
-
 }
