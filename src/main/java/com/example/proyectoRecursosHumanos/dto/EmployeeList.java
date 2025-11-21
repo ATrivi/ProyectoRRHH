@@ -18,7 +18,7 @@ public class EmployeeList {
         if (empleado.getPuesto() != null) {
             this.puesto = empleado.getPuesto().getNombrePuesto();
         } else {
-            this.puesto = null; // o "Sin puesto" si prefieres
+            this.puesto = null;
         }
     }
 

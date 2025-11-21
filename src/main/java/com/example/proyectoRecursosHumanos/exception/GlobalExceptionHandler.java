@@ -26,7 +26,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Map<String, Object>> handleValidationExceptions(
             MethodArgumentNotValidException ex, HttpServletRequest request) {
 
-        // 1. Recoger y formatear todos los errores de campo.
+        //Recoge y formatea todos los errores de campo.
         List<String> errors = ex.getBindingResult().getAllErrors().stream()
                 .map(error -> {
                     String fieldName = (error instanceof FieldError) ?
@@ -36,7 +36,7 @@ public class GlobalExceptionHandler {
                 })
                 .collect(Collectors.toList());
 
-        // 2. Crear el cuerpo de respuesta base
+        //Crea el cuerpo de respuesta base
         Map<String, Object> body = createBaseErrorBody(
                 HttpStatus.BAD_REQUEST,
                 "Validation Error",
@@ -44,7 +44,7 @@ public class GlobalExceptionHandler {
                 request.getRequestURI()
         );
 
-        // 3. Agregar la lista detallada de errores
+        //Agregar la lista detallada de errores
         body.put("validationErrors", errors);
 
         return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);

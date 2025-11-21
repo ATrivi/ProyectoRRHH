@@ -12,7 +12,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
 
 @Service
 public class UserService {
@@ -109,7 +108,7 @@ public class UserService {
     @PreAuthorize("isAuthenticated()")
     public UserResponse obtenerInfoUsuario(String userName) {
 
-        //Usamos el constructor user del DTO userResponse para devolver la info
+        //Usa el constructor user del DTO userResponse para devolver la info
         User user = userRepository.findByUserName(userName)
                 .orElseThrow(() -> new ResourceNotFoundException("Usuario", "Username", userName));
 

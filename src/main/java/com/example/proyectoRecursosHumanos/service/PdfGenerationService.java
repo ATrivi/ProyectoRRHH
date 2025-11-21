@@ -15,16 +15,11 @@ import java.math.BigDecimal;
 @Service
 public class PdfGenerationService {
 
-    /**
-     * Genera el recibo de nómina como un PDF en formato de array de bytes.
-     * * @param payroll La entidad Payroll con todos los datos necesarios para el recibo.
-     * @return Array de bytes que representan el archivo PDF.
-     */
+    //array de bytes para generar el pdf del recibo de pago
     public byte[] generarReciboPagoPdf(Payroll payroll) {
 
         try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
 
-            // 1. Inicialización del documento y el escritor
             Document document = new Document();
             PdfWriter.getInstance(document, baos);
             document.open();
@@ -38,7 +33,6 @@ public class PdfGenerationService {
 
             //Contenido
 
-            // Título Centrado
             Paragraph titulo = new Paragraph("RECIBO DE NÓMINA", tituloFont);
             titulo.setAlignment(Element.ALIGN_CENTER);
             document.add(titulo);
@@ -47,7 +41,7 @@ public class PdfGenerationService {
             document.add(new Paragraph("----------------------------------------------------------------------"));
             document.add(new Paragraph("\n"));
 
-            // Detalles del Empleado
+            //Detalles del Empleado
             document.add(new Paragraph("DATOS DEL EMPLEADO", encabezadoFont));
             document.add(new Paragraph("Nombre: " + payroll.getEmpleado().getNombre(), textoFont));
             document.add(new Paragraph("ID Empleado: " + payroll.getEmpleado().getId(), textoFont));
@@ -55,14 +49,14 @@ public class PdfGenerationService {
 
             document.add(new Paragraph("\n"));
 
-            // Detalles Financieros
+            //Detalles Financieros
             document.add(new Paragraph("DETALLE DE INGRESOS Y DEDUCCIONES", encabezadoFont));
             document.add(new Paragraph("Salario Base: " + payroll.getSalarioBase().toString() + " EUR", textoFont));
             document.add(new Paragraph("Complementos: " + payroll.getComplementos().toString() + " EUR", textoFont));
 
             document.add(new Paragraph("\n"));
 
-            // Suma de Deducciones e Impuestos para mostrar el total restado
+            //Suma de Deducciones e Impuestos para mostrar el total restado
             BigDecimal totalDeducido = payroll.getDeducciones().add(payroll.getImpuestos());
             document.add(new Paragraph("Total Deducciones e Impuestos: " + totalDeducido.toString() + " EUR", textoFont));
 
@@ -70,15 +64,14 @@ public class PdfGenerationService {
             document.add(new Paragraph("----------------------------------------------------------------------"));
             document.add(new Paragraph("\n"));
 
-            // Total Neto
+            //Total Neto
             Paragraph neto = new Paragraph("SALARIO NETO A PAGAR: " + payroll.getSalarioNeto().toString() + " EUR", netoFont);
             neto.setAlignment(Element.ALIGN_RIGHT);
             document.add(neto);
 
-            // 4. Cerrar el documento para finalizar la escritura
             document.close();
 
-            // 5. Devolver el contenido
+            //Devuelve el contenido
             return baos.toByteArray();
 
         } catch (Exception e) {

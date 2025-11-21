@@ -15,23 +15,23 @@ public class FileStorageService {
 
     public String savePaySlip(Integer payrollId, byte[] pdfContent, String employeeName) {
 
-        // 1. Crear el nombre del archivo
+        //nombre del archivo
         String fileName = employeeName.replaceAll(" ", "_") + "_" + payrollId + ".pdf";
         Path targetPath = Paths.get(STORAGE_ROOT, fileName);
 
         try {
-            // 2. Asegurarse de que el directorio exista
+            //Asegurarse de que el directorio exista, sino, lo crea
             File directory = new File(STORAGE_ROOT);
             if (!directory.exists()) {
-                directory.mkdirs(); // Crea directorios si no existen
+                directory.mkdirs();
             }
 
-            // 3. Escribir los bytes al disco
+            //Escribir los bytes al disco
             try (FileOutputStream fos = new FileOutputStream(targetPath.toFile())) {
                 fos.write(pdfContent);
             }
 
-            // 4. Devolver la ruta completa para guardarla en la base de datos
+            //Devolver la ruta completa para guardarla en la base de datos
             return targetPath.toAbsolutePath().toString();
 
         } catch (IOException e) {

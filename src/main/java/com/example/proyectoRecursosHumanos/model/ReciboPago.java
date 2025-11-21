@@ -11,7 +11,7 @@ public class ReciboPago {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    // Relación 1:1 con el registro de pago (Una nómina tiene un recibo)
+    //Relación 1:1 con el registro de pago (Una nómina tiene un recibo)
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "payroll_id", nullable = false)
     private Payroll payroll;

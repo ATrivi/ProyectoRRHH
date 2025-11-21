@@ -1,0 +1,37 @@
+services:  #hay que poner al mismo nivel todos los contenedores que queramos, en este caso prueba1 y prueba1MySQL
+#bloque principal donde defines cada “servicio” (contenedor) que quieres levantar.
+#Por qué: Compose coordina varios contenedores como un conjunto (tu base de datos y tu app).
+  prueba1:
+    build: .  #Construye tu imagen usando el Dockerfile del proyecto.
+    ports:
+      - "9090:9090"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://localhost:3306/proyecto_recursos_humanos
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: 1234
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+    depends_on: #Asegura que la base arranque antes de la app.
+      prueba1mysql:
+          condition: service_healthy
+    restart: always #Reinicia el contenedor si falla.
+
+  prueba1mysql:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: proyecto_recursos_humanos
+      MYSQL_USER:
+      MYSQL_PASSWORD:
+    ports:
+      - "3307:3306"
+    volumes:
+      - db_data:/var/lib/mysql  #Guarda los datos fuera del contenedor (para que no se borren al reiniciar).
+    restart: always
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-p1234" ]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  db_data:
