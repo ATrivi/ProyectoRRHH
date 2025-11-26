@@ -20,6 +20,6 @@ WORKDIR /app
 #Trae el JAR ya construido desde la etapa build y lo copia como app.jar.
 #--from=build = “cógelo de la etapa de compilación”.
 COPY --from=build /app/target/*.jar app.jar
-EXPOSE 8080
+EXPOSE 9090
 #Comando con el que arranca el contenedor: ejecutar tu JAR con Java
 ENTRYPOINT ["java","-jar","/app/app.jar"]

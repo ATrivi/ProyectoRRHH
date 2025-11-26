@@ -4,9 +4,9 @@ services:  #hay que poner al mismo nivel todos los contenedores que queramos, en
   prueba1:
     build: .  #Construye tu imagen usando el Dockerfile del proyecto.
     ports:
-      - "9090:9090"
+      - "9091:9090"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://localhost:3306/proyecto_recursos_humanos
+      SPRING_DATASOURCE_URL: jdbc:mysql://prueba1mysql:3306/proyecto_recursos_humanos
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: 1234
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
@@ -16,7 +16,7 @@ services:  #hay que poner al mismo nivel todos los contenedores que queramos, en
     restart: always #Reinicia el contenedor si falla.
 
   prueba1mysql:
-    image: mysql:5.7
+    image: mysql:8.0
     environment:
       MYSQL_ROOT_PASSWORD: 1234
       MYSQL_DATABASE: proyecto_recursos_humanos
