@@ -7,7 +7,6 @@ import java.util.Optional;
 
 public interface JobPositionRepository extends JpaRepository<JobPosition, Integer> {
 
-    // Se evitan duplicados al crear/editar
     boolean existsByNombrePuesto(String nombrePuesto);
 
     Optional<JobPosition> findByNombrePuesto(String nombrePuesto);

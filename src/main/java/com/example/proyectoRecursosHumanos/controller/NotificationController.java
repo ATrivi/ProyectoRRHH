@@ -69,7 +69,7 @@ public class NotificationController {
     @Transactional
     public ResponseEntity<Void> marcarComoLeidas(Principal principal) {
 
-         //Principal principal es un parámetro que Spring MVC inyecta automáticamente con el principal de seguridad actual (implementa java.security.Principal).
+        //Principal principal es un parámetro que Spring MVC inyecta automáticamente con el principal de seguridad actual (implementa java.security.Principal).
         // En aplicaciones con Spring Security, principal.getName() suele devolver el nombre de usuario autenticado
 
         Optional<Employee> employeeOptional = employeeRepository.findByUser_UserName(principal.getName());

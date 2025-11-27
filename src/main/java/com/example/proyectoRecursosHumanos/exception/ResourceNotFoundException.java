@@ -12,7 +12,7 @@ public class ResourceNotFoundException extends RuntimeException {
         super(String.format("%s no encontrado con %s : '%s'", resourceName, fieldName, fieldValue));
     }
 
-    // Constructor que acepta mensaje y causa (si quisieras anidar otra excepción)
+    // Constructor que acepta mensaje y causa
     public ResourceNotFoundException(String message, Throwable cause) {
         super(message, cause);
     }

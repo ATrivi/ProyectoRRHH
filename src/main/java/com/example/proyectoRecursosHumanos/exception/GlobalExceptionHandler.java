@@ -68,7 +68,7 @@ public class GlobalExceptionHandler {
     }
 
     /**
-     * Intercepta errores de conflicto (ej. intento de crear un departamento con nombre duplicado).
+     * Intercepta errores de conflicto (como por ejemplo un intento de crear un departamento con nombre duplicado).
      * Mapea a HTTP 409 CONFLICT.
      */
     @ExceptionHandler(DuplicateResourceException.class)
@@ -95,7 +95,7 @@ public class GlobalExceptionHandler {
         );
     }
 
-    // --- MANEJO DE EXCEPCIONES GENÉRICAS (Incluyendo tu ejemplo original) ---
+    // --- MANEJO DE EXCEPCIONES GENÉRICAS ---
 
     /**
      * Intercepta errores de argumentos inválidos (ej. un valor que no cumple la lógica de negocio).
